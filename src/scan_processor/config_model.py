@@ -14,8 +14,10 @@ class Settings(pydantic.BaseSettings):
         env_file = 'configs/config.dev'
         secrets_dir = 'secrets'
 
-    sandbox: bool = True
-    directory: str = "D:\\Benutzer\\mstuebner\\Eigene Dateien\\ScanSnap"
+    scan_directory: str = "D:\\Benutzer\\mstuebner\\Eigene Dateien\\ScanSnap"
+    output_path: str = "D:\\Benutzer\\mstuebner\\Eigene Dateien\\ScanSnap\\Ev-Autoimport\\matthias"
+    timeout: int = 5
+    filepattern = ["*.pdf"]
 
 
 settings = Settings()
