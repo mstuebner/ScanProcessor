@@ -1,4 +1,4 @@
-PyPDF4
 pydantic
 watchdog
 zc.lockfile
+PyPDF4
