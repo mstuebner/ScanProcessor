@@ -2,3 +2,4 @@ pydantic
 watchdog
 zc.lockfile
 PyPDF4
+pylint
