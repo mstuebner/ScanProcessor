@@ -4,3 +4,4 @@ zc.lockfile
 PyPDF4
 pylint
 pytest
+freezegun
