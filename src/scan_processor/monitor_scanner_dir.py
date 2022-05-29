@@ -51,8 +51,8 @@ def process_files():
     pdf_list = collect_pdfs_to_merge(scan_directory=settings.scan_directory)
     pdf_list = [f.strip() for f in pdf_list if f.endswith('.pdf')]
 
-    sum_pages, num_files = pdf_merger.merge_pdfs(list_of_pdfs=pdf_list, output_path=settings.output_path)
-    LOG.info('Finished merging %s pdf file with %s pages.', num_files, sum_pages)
+    num_files, sum_pages = pdf_merger.merge_pdfs(list_of_pdfs=pdf_list, output_path=settings.output_path)
+    LOG.info('>>>>> FINISHED MERGING %s pdf file with %s pages.', num_files, sum_pages)
 
 
 def start_timer_thread(timer):
@@ -62,7 +62,7 @@ def start_timer_thread(timer):
     """
     if timer is not None:
         timer.cancel()
-        LOG.debug('RESET timer')
+        LOG.debug('CANCEL timer')
 
     timer = threading.Timer(settings.timeout, process_files)
     timer.start()
