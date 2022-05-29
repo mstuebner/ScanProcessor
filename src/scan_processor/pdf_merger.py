@@ -7,12 +7,13 @@ import logging
 import os
 import typing
 import uuid
+
 from PyPDF4 import PdfFileReader, PdfFileMerger
+
+from config_model import settings
 
 LOG = logging.getLogger('scan_processor.pdf_merger')
 LOG.setLevel(level=logging.INFO)
-
-OUTPUT = "Merged_PDF"
 
 
 def merge_pdfs(list_of_pdfs: typing.List[str], output_path) -> typing.Tuple[int, int]:
@@ -33,19 +34,22 @@ def merge_pdfs(list_of_pdfs: typing.List[str], output_path) -> typing.Tuple[int,
         num_files_merged += 1
         os.remove(_input_file)
 
-    write_merged_pdf(merger, output_path)
-    LOG.info("Output successfully written to %s, number of pages: %s", output_path, sum_pages)
+    output_filename = write_merged_pdf(merger, output_path)
+    LOG.info("Output successfully written to %s, number of pages: %s", output_filename, sum_pages)
     merger.close()
 
     return num_files_merged, sum_pages
 
 
-def write_merged_pdf(merger, output_path):
+def write_merged_pdf(merger: PdfFileMerger, output_path: str):
     """
     Function writes the merged pdf to filesystem
     """
-    with open(make_unique_filename(default_name=OUTPUT, output_dir=output_path), "wb") as filehandle_write:
+    unique_filename = make_unique_filename(default_name=settings.default_output_pdf_name, output_dir=output_path)
+    with open(unique_filename, "wb") as filehandle_write:
         merger.write(filehandle_write)
+
+    return unique_filename
 
 
 def make_unique_filename(default_name: str, output_dir: str) -> str:
