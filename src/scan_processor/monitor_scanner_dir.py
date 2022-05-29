@@ -15,8 +15,8 @@ from watchdog.events import PatternMatchingEventHandler
 from watchdog.observers import Observer
 
 # Project owned modules
-from config_model import settings
-import pdf_merger
+from src.scan_processor.config_model import settings
+import src.scan_processor.pdf_merger as pm
 
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s - %(message)s',
@@ -51,7 +51,7 @@ def process_files():
     pdf_list = collect_pdfs_to_merge(scan_directory=settings.scan_directory)
     pdf_list = [f.strip() for f in pdf_list if f.endswith('.pdf')]
 
-    num_files, sum_pages = pdf_merger.merge_pdfs(list_of_pdfs=pdf_list, output_path=settings.output_path)
+    num_files, sum_pages = pm.merge_pdfs(list_of_pdfs=pdf_list, output_path=settings.output_path)
     LOG.info('>>>>> FINISHED MERGING %s pdf file with %s pages.', num_files, sum_pages)
 
 

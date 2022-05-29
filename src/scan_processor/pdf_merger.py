@@ -10,7 +10,7 @@ import uuid
 
 from PyPDF4 import PdfFileReader, PdfFileMerger
 
-from config_model import settings
+from src.scan_processor.config_model import settings
 
 LOG = logging.getLogger('scan_processor.pdf_merger')
 LOG.setLevel(level=logging.INFO)
