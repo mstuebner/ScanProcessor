@@ -48,7 +48,7 @@ def write_merged_pdf(merger, output_path):
         merger.write(filehandle_write)
 
 
-def make_unique_filename(default_name, output_dir):
+def make_unique_filename(default_name: str, output_dir: str) -> str:
     """
     Function generates a unique file name and adds an uuid in case that the file name already exists
     """
