@@ -15,7 +15,7 @@ LOG = logging.getLogger('scan_processor.pdf_merger')
 LOG.setLevel(level=logging.INFO)
 
 
-output = "Merged_PDF"
+OUTPUT = "Merged_PDF"
 
 
 def merge_pdfs(list_of_pdfs: typing.List[str], output_path):
@@ -28,11 +28,15 @@ def merge_pdfs(list_of_pdfs: typing.List[str], output_path):
     for _input_file in list_of_pdfs:
         pages = PdfFileReader(_input_file).numPages
         sum_pages += pages
-        merger.append(fileobj=open(_input_file, "rb"), pages=(0, pages))
+
+        with open(_input_file, "rb") as filehandle_write:
+            merger.append(fileobj=filehandle_write, pages=(0, pages))
 
         os.remove(_input_file)
 
-    merger.write(open(make_filename(default_name=output, output_dir=output_path), "wb"))
+    with open(make_filename(default_name=OUTPUT, output_dir=output_path), "wb") as filehandle_write:
+        merger.write(filehandle_write)
+
     LOG.info("Output successfully written to %s, number of pages: %s", output_path, sum_pages)
 
     merger.close()
@@ -45,5 +49,5 @@ def make_filename(default_name, output_dir):
     file_name_to_check = os.path.join(output_dir, f'{default_name}-{str(datetime.date.today())}')
     if os.path.exists(f'{file_name_to_check}.pdf'):
         return f'{file_name_to_check}-{str(uuid.uuid4())}.pdf'
-    else:
-        return f'{file_name_to_check}.pdf'
+
+    return f'{file_name_to_check}.pdf'

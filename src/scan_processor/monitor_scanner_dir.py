@@ -87,6 +87,7 @@ def on_created(event):
     """
     Event handler for CREATE event, fires when a new file is created
     """
+    # pylint: disable=W0603
     global TIMER_THREAD
 
     if file_in_scandir(filepath=os.path.split(event.src_path)[0], scan_dir=settings.scan_directory):
