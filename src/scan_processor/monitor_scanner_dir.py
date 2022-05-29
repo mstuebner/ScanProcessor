@@ -23,14 +23,14 @@ logging.basicConfig(level=logging.DEBUG,
                     datefmt='%Y-%m-%d %H:%M:%S')
 
 LOG = logging.getLogger('scan_processor.directory_monitor')
-LOG.setLevel(level=logging.INFO)
+LOG.setLevel(level=logging.INFO)  # Comment this line for debugging
 
 TIMER_THREAD = None
 
 
 def collect_pdfs_to_merge(scan_directory: str) -> typing.List[str]:
     """
-    Function scans the directory and returns a list of absolut filepathes
+    Function scans the scan_directory and returns a list of absolut filepathes
     """
     pdf_list = []
 
@@ -43,7 +43,7 @@ def collect_pdfs_to_merge(scan_directory: str) -> typing.List[str]:
 
 def process_files():
     """
-    When this function is called:
+    This function is called when the timer runs out after TIMEOUT. When this function is called:
     - Collect all *.pdf files in the defined scan directory: Done
     - merge them into one pdf in the target directory: Done
     - delete original pdfs: Done
@@ -51,8 +51,8 @@ def process_files():
     pdf_list = collect_pdfs_to_merge(scan_directory=settings.scan_directory)
     pdf_list = [f.strip() for f in pdf_list if f.endswith('.pdf')]
 
-    pdf_merger.merge_pdfs(list_of_pdfs=pdf_list, output_path=settings.output_path)
-    LOG.info('MERGE finished')
+    sum_pages, num_files = pdf_merger.merge_pdfs(list_of_pdfs=pdf_list, output_path=settings.output_path)
+    LOG.info('Finished merging %s pdf file with %s pages.', num_files, sum_pages)
 
 
 def start_timer_thread(timer):
@@ -110,15 +110,14 @@ def file_in_scandir(filepath: str, scan_dir: str) -> bool:
 def monitoring(monitoring_settings):
     """Main function to monitor the directory defined in monitoring_settings.directory"""
     my_event_handler = create_event_handler()
-    LOG.debug('PatternMatchingEventHandler created')
-
     my_event_handler.on_created = on_created
-    LOG.debug('"on_created" eventhandler added')
+    LOG.debug('PatternMatchingEventHandler created and "on_created" eventhandler added')
 
     observer = Observer()
     observer.schedule(my_event_handler, monitoring_settings.scan_directory, recursive=True)
     observer.start()
     LOG.debug('Observer scheduled and started.')
+
     try:
         while True:
             time.sleep(1)
