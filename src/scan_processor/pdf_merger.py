@@ -7,7 +7,6 @@ import logging
 import os
 import os.path
 import typing
-from sys import argv
 import uuid
 from PyPDF4 import PdfFileReader, PdfFileMerger
 
