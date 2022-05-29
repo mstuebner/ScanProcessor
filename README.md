@@ -1,4 +1,4 @@
-[![Pylint](https://github.com/mstuebner/ScanProcessor/actions/workflows/pylint.yml/badge.svg?branch=master)](https://github.com/mstuebner/EvernoteSync/actions/workflows/pylint.yml)
+[![Pylint](https://github.com/mstuebner/ScanProcessor/actions/workflows/pylint.yml/badge.svg?branch=master)](https://github.com/mstuebner/ScanProcessor/actions/workflows/pylint.yml)
 
 # Scan processor: Automating scanning pages
 
