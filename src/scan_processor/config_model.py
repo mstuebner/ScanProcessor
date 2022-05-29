@@ -18,6 +18,7 @@ class Settings(pydantic.BaseSettings):
     output_path: str = "D:\\Benutzer\\mstuebner\\Eigene Dateien\\ScanSnap\\Ev-Autoimport\\matthias"
     timeout: int = 5
     filepattern = ["*.pdf"]
+    default_output_pdf_name: str = "Merged_PDF"
 
 
 settings = Settings()
